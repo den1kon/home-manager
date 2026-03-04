@@ -36,5 +36,39 @@ in
 
   programs.firefox = {
     enable = true;
+    languagePacks = [ "en-US" ];
+    policies = {
+      DefaultDownloadDirectory = "\${home}/firefoxDownloads";
+      AppAutoUpdate = false;
+      SearchEngines = {
+        Default = "DuckDuckGo";
+      };
+      OfferToSaveLogins = false; # Control whether or not Firefox offers to save passwords.
+      # Disable or configure PDF.js, the built-in PDF viewer.
+      PDFjs = {
+        Enabled = true;
+        EnablePermissions = false; # if set to true, the built-in PDF viewer will honor document permissions like preventing the copying of text.
+      };
+
+      # ----Performance----
+      DisableFeedbackCommands = true; # Disable the menus for reporting sites.
+      DisableFirefoxAccounts = true; # Disable Firefox Accounts integration (Sync).
+      DisableFirefoxScreenshots = true; # Remove access to Firefox Screenshots.
+      DisablePocket = true; # Remove Pocket in the Firefox UI.
+      DisableSetDesktopBackground = true; # Remove the “Set As Desktop Background…” menuitem when right clicking on an image.
+      DontCheckDefaultBrowser = true; # Don’t check if Firefox is the default browser at startup.
+      # Configure generative AI features.
+      GenerativeAI = {
+        Enabled = false;
+      };
+      HardwareAcceleration = true; # Control hardware acceleration.
+      PasswordManagerEnabled = false; # Remove (some) access to the password manager.
+      PrintingEnabled = false; # Enable or disable printing.
+
+      # ----Privacy----
+      DisableFirefoxStudies = true; # Disable Firefox studies (Shield).
+      DisableFormHistory = true; # Turn off saving information on web forms and the search bar.
+      DisableTelemetry = true;
+    };
   };
 }
