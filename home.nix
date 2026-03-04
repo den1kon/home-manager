@@ -77,6 +77,38 @@ in
       DisableFirefoxStudies = true; # Disable Firefox studies (Shield).
       DisableFormHistory = true; # Turn off saving information on web forms and the search bar.
       DisableTelemetry = true;
+
+      ExtensionSettings = {
+        "*".installation_mode = "blocked"; # blocks all addons except the ones specified below
+        # uBlock Origin
+        "uBlock0@raymondhill.net" = {
+          install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
+          installation_mode = "force_installed";
+          default_area = "navbar";
+        };
+        "keepassxc-browser@keepassxc.org" = {
+          install_url = "https://addons.mozilla.org/firefox/downloads/latest/keepassxc-browser/latest.xpi";
+          installation_mode = "force_installed";
+          default_area = "navbar";
+        };
+        "addon@darkreader.org" = {
+          install_url = "https://addons.mozilla.org/firefox/downloads/file/4665768/latest.xpi";
+          installation_mode = "force_installed";
+          default_area = "navbar";
+        };
+        "clipper@obsidian.md" = {
+          install_url = "https://addons.mozilla.org/firefox/downloads/file/4707389/latest.xpi";
+          installation_mode = "force_installed";
+          default_area = "navbar";
+        };
+        # Bitwarden
+        "{446900e4-71c2-419f-a6a7-df9c091e268b}" = {
+          install_url = "https://addons.mozilla.org/firefox/downloads/file/4698131/latest.xpi";
+          installation_mode = "force_installed";
+          default_area = "navbar";
+        };
+      };
+
     };
   };
 }
