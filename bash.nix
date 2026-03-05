@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  home.programs.bash = {
+  programs.bash = {
     enable = true;
     shellAliases = {
       ls = "eza";
