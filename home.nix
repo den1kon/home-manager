@@ -1,114 +1,76 @@
-{ lib, pkgs, ... }:
-let
-  username = "dk";
-in
+{ config, pkgs, ... }:
+
 {
-  home = {
-    packages = with pkgs; [ ];
+  # Home Manager needs a bit of information about you and the paths it should
+  # manage.
+  home.username = "dk";
+  home.homeDirectory = "/home/dk";
 
-    inherit username;
-    homeDirectory = "/home/${username}";
-    stateVersion = "25.05";
+  # This value determines the Home Manager release that your configuration is
+  # compatible with. This helps avoid breakage when a new Home Manager release
+  # introduces backwards incompatible changes.
+  #
+  # You should not change this value, even if you update Home Manager. If you do
+  # want to update the value, then make sure to first check the Home Manager
+  # release notes.
+  home.stateVersion = "25.11"; # Please read the comment before changing.
 
-    file = {
-      ".bashrc" = {
-        text = ''
-          								# This must be sourced in your .bashrc or whatever shell you're using.
-          								# In the future we can get home-manager to do this for us, but bootstrapping for now...
-          								source $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh
-          								alias ls = eza
-          								complete -cf doas
-        '';
-        executable = false;
-      };
-    };
+  # The home.packages option allows you to install Nix packages into your
+  # environment.
+  home.packages = [
+    # # Adds the 'hello' command to your environment. It prints a friendly
+    # # "Hello, world!" when run.
+    # pkgs.hello
+
+    # # It is sometimes useful to fine-tune packages, for example, by applying
+    # # overrides. You can do that directly here, just don't forget the
+    # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
+    # # fonts?
+    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
+
+    # # You can also create simple shell scripts directly inside your
+    # # configuration. For example, this adds a command 'my-hello' to your
+    # # environment:
+    # (pkgs.writeShellScriptBin "my-hello" ''
+    #   echo "Hello, ${config.home.username}!"
+    # '')
+  ];
+
+  # Home Manager is pretty good at managing dotfiles. The primary way to manage
+  # plain files is through 'home.file'.
+  home.file = {
+    # # Building this configuration will create a copy of 'dotfiles/screenrc' in
+    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
+    # # symlink to the Nix store copy.
+    # ".screenrc".source = dotfiles/screenrc;
+
+    # # You can also set the file content immediately.
+    # ".gradle/gradle.properties".text = ''
+    #   org.gradle.console=verbose
+    #   org.gradle.daemon.idletimeout=3600000
+    # '';
   };
 
-  programs.bash = {
-    enable = true;
-    shellAliases = {
-      ls = "eza";
-    };
-    bashrcExtra = ''
-      complete -cf doas
-    '';
+  # Home Manager can also manage your environment variables through
+  # 'home.sessionVariables'. These will be explicitly sourced when using a
+  # shell provided by Home Manager. If you don't want to manage your shell
+  # through Home Manager then you have to manually source 'hm-session-vars.sh'
+  # located at either
+  #
+  #  ~/.nix-profile/etc/profile.d/hm-session-vars.sh
+  #
+  # or
+  #
+  #  ~/.local/state/nix/profiles/profile/etc/profile.d/hm-session-vars.sh
+  #
+  # or
+  #
+  #  /etc/profiles/per-user/dk/etc/profile.d/hm-session-vars.sh
+  #
+  home.sessionVariables = {
+    # EDITOR = "emacs";
   };
 
-  programs.firefox = {
-    enable = true;
-    languagePacks = [ "en-US" ];
-    policies = {
-      DefaultDownloadDirectory = "\${home}/firefoxDownloads";
-      AppAutoUpdate = false;
-      SearchEngines = {
-        Default = "DuckDuckGo";
-        Remove = [
-          "Google"
-          "Ecosia"
-          "Bing"
-        ];
-      };
-      OfferToSaveLogins = false; # Control whether or not Firefox offers to save passwords.
-      # Disable or configure PDF.js, the built-in PDF viewer.
-      PDFjs = {
-        Enabled = true;
-        EnablePermissions = false; # if set to true, the built-in PDF viewer will honor document permissions like preventing the copying of text.
-      };
-      FirefoxSuggest = {
-        WebSuggestions = false;
-      };
-
-      # ----Performance----
-      DisableFeedbackCommands = true; # Disable the menus for reporting sites.
-      DisableFirefoxAccounts = true; # Disable Firefox Accounts integration (Sync).
-      DisableFirefoxScreenshots = true; # Remove access to Firefox Screenshots.
-      DisablePocket = true; # Remove Pocket in the Firefox UI.
-      DisableSetDesktopBackground = true; # Remove the “Set As Desktop Background…” menuitem when right clicking on an image.
-      DontCheckDefaultBrowser = true; # Don’t check if Firefox is the default browser at startup.
-      # Configure generative AI features.
-      GenerativeAI = {
-        Enabled = false;
-      };
-      HardwareAcceleration = true; # Control hardware acceleration.
-      PasswordManagerEnabled = false; # Remove (some) access to the password manager.
-      PrintingEnabled = false; # Enable or disable printing.
-
-      # ----Privacy----
-      DisableFirefoxStudies = true; # Disable Firefox studies (Shield).
-      DisableFormHistory = true; # Turn off saving information on web forms and the search bar.
-      DisableTelemetry = true;
-
-      ExtensionSettings = {
-        "*".installation_mode = "blocked"; # blocks all addons except the ones specified below
-        # uBlock Origin
-        "uBlock0@raymondhill.net" = {
-          install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
-          installation_mode = "force_installed";
-          default_area = "navbar";
-        };
-        "keepassxc-browser@keepassxc.org" = {
-          install_url = "https://addons.mozilla.org/firefox/downloads/latest/keepassxc-browser/latest.xpi";
-          installation_mode = "force_installed";
-          default_area = "navbar";
-        };
-        "addon@darkreader.org" = {
-          install_url = "https://addons.mozilla.org/firefox/downloads/file/4665768/latest.xpi";
-          installation_mode = "force_installed";
-          default_area = "navbar";
-        };
-        "clipper@obsidian.md" = {
-          install_url = "https://addons.mozilla.org/firefox/downloads/file/4707389/latest.xpi";
-          installation_mode = "force_installed";
-          default_area = "navbar";
-        };
-        # Bitwarden
-        "{446900e4-71c2-419f-a6a7-df9c091e268b}" = {
-          install_url = "https://addons.mozilla.org/firefox/downloads/file/4698131/latest.xpi";
-          installation_mode = "force_installed";
-          default_area = "navbar";
-        };
-      };
-
-    };
-  };
+  # Let Home Manager install and manage itself.
+  programs.home-manager.enable = true;
 }

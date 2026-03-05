@@ -1,25 +1,35 @@
 {
-	description = "My Home Manager configuration";
+  description = "Home Manager configuration of dk";
 
-	inputs = {
-		nixpkgs.url = "nixpkgs/nixos-25.05";
+  inputs = {
+    # Specify the source of Home Manager and Nixpkgs.
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
 
-		home-manager = {
-			url = "github:nix-community/home-manager/release-25.05";
-		};
-	};
+  outputs =
+    { nixpkgs, home-manager, ... }:
+    let
+      system = "x86_64-linux";
+      pkgs = nixpkgs.legacyPackages.${system};
+    in
+    {
+      homeConfigurations."dk" = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
 
-	outputs = { nixpkgs, home-manager, ... }:
-		let 
-			lib = nixpkgs.lib;
-			system = "x86_64-linux";
-			pkgs = import nixpkgs { inherit  system; };
-		in {
-			homeConfigurations = {
-				dk = home-manager.lib.homeManagerConfiguration {
-					inherit pkgs;
-					modules = [ ./home.nix ];
-				};
-			};
-		};
+        # Specify your home configuration modules here, for example,
+        # the path to your home.nix.
+        modules = [
+          ./home.nix
+          ./bash.nix
+          ./firefox.nix
+        ];
+
+        # Optionally use extraSpecialArgs
+        # to pass through arguments to home.nix
+      };
+    };
 }
