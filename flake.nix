@@ -8,10 +8,16 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    textfox.url = "github:adriankarlen/textfox";
   };
 
   outputs =
-    { nixpkgs, home-manager, ... }:
+    {
+      nixpkgs,
+      home-manager,
+      textfox,
+      ...
+    }:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -23,9 +29,11 @@
         # Specify your home configuration modules here, for example,
         # the path to your home.nix.
         modules = [
+          textfox.homeManagerModules.default
           ./home.nix
           ./bash.nix
           ./firefox.nix
+          ./gtk.nix
         ];
 
         # Optionally use extraSpecialArgs

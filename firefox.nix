@@ -1,6 +1,23 @@
 { config, pkgs, ... }:
 
 {
+  textfox = {
+    enable = true;
+    # Replace with the names of profiles, defined in home-manager, or find existing ones in `about:profiles`
+    profiles = [
+      "denikon"
+      "test"
+    ];
+    config = {
+      tabs = {
+        horizontal.enable = false;
+        vertical.enable = true;
+        vertical.sidebery.enable = false;
+        # vertical.sidebery.margin = "1.0rem";
+      };
+    };
+  };
+
   programs.firefox = {
     enable = true;
     languagePacks = [ "en-US" ];
@@ -121,6 +138,12 @@
         # Firefox Multi-Account Containers
         "@testpilot-containers" = {
           install_url = "https://addons.mozilla.org/firefox/downloads/file/4627302/latest.xpi";
+          installation_mode = "force_installed";
+          default_area = "navbar";
+        };
+        # Sidebery
+        "{3c078156-979c-498b-8990-85f7987dd929}" = {
+          install_url = "https://addons.mozilla.org/firefox/downloads/file/4688454/latest.xpi";
           installation_mode = "force_installed";
           default_area = "navbar";
         };
