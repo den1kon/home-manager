@@ -34,6 +34,7 @@
           ./bash.nix
           ./firefox.nix
           ./gtk.nix
+          ./delta.nix
         ];
 
         # Optionally use extraSpecialArgs

@@ -11,7 +11,7 @@
     config = {
       tabs = {
         horizontal.enable = false;
-        vertical.enable = true;
+        # vertical.enable = true;
         vertical.sidebery.enable = false;
         # vertical.sidebery.margin = "1.0rem";
       };
@@ -28,6 +28,15 @@
         id = 000;
         settings = {
           "browser.startup.homepage" = "";
+          "shyfox.enable.ext.mono.toolbar.icons" = true;
+          "shyfox.enable.ext.mono.context.icons" = true;
+          "shyfox.enable.context.menu.icons" = true;
+          # Remove sponsored stuff
+          "browser.newtabpage.activity-stream.showSponsored" = false;
+          "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
+          "browser.newtabpage.activity-stream.system.showSponsored" = false;
+          "services.sync.prefs.sync.browser.newtabpage.activity-stream.showSponsored" = false;
+          "services.sync.prefs.sync.browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
           # Peskyfox
           "extensions.getAddons.showPane" = false; # disable about:addons' Recommendations pane (uses Google Analytics)
           "extensions.htmlaboutaddons.recommendations.enabled" = false; # disable recommendations in about:addons' Extensions and Themes panes
@@ -54,6 +63,11 @@
             icon = "chill";
             color = "purple";
             id = 101;
+          };
+          "Gmail" = {
+            icon = "circle";
+            color = "red";
+            id = 102;
           };
         };
       };
@@ -114,11 +128,11 @@
           installation_mode = "force_installed";
           default_area = "navbar";
         };
-        "keepassxc-browser@keepassxc.org" = {
-          install_url = "https://addons.mozilla.org/firefox/downloads/latest/keepassxc-browser/latest.xpi";
-          installation_mode = "force_installed";
-          default_area = "navbar";
-        };
+        # "keepassxc-browser@keepassxc.org" = {
+        #   install_url = "https://addons.mozilla.org/firefox/downloads/latest/keepassxc-browser/latest.xpi";
+        #   installation_mode = "force_installed";
+        #   default_area = "navbar";
+        # };
         # "addon@darkreader.org" = {
         #   install_url = "https://addons.mozilla.org/firefox/downloads/file/4665768/latest.xpi";
         #   installation_mode = "force_installed";
@@ -144,6 +158,12 @@
         # Sidebery
         "{3c078156-979c-498b-8990-85f7987dd929}" = {
           install_url = "https://addons.mozilla.org/firefox/downloads/file/4688454/latest.xpi";
+          installation_mode = "force_installed";
+          default_area = "navbar";
+        };
+        # Firefox Color
+        "FirefoxColor@mozilla.com" = {
+          install_url = "https://addons.mozilla.org/firefox/downloads/file/3643624/latest.xpi";
           installation_mode = "force_installed";
           default_area = "navbar";
         };
