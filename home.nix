@@ -28,17 +28,19 @@ let
 
   isMacbook = system == "aarch64-darwin";
   isThinkpad = system == "x86_64-linux";
-in
+  isLinux = isThinkpad;
 
+  iosevkaTermNerdFont = pkgs.nerd-fonts.iosevka-term;
+
+  fontsDir = if isMacbook then "Library/Fonts" else ".local/share/fonts";
+in
 {
-  # Home Manager configuration
   home.username = username;
   home.homeDirectory = homeDirectory;
-  nixpkgs.config.allowUnfree = true;
 
+  nixpkgs.config.allowUnfree = true;
   home.stateVersion = "25.11";
 
-  # Universal packages for both systems
   home.packages = [
     tree-sitter-cli
     pkgs.neovim
@@ -62,7 +64,6 @@ in
     pkgs.phpactor
     pkgs.tinymist
     pkgs.typstyle
-    # pkgs.tree-sitter
 
     pkgs.rustc
     pkgs.rustfmt
@@ -73,8 +74,9 @@ in
     pkgs.bat
     pkgs.eza
     pkgs.zoxide
+
+    iosevkaTermNerdFont
   ]
-  # Macbook-specific packages
   ++ (
     if isMacbook then
       [
@@ -82,14 +84,11 @@ in
         pkgs.code-cursor
         pkgs.orbstack
         php
-        (pkgs.php82Packages.composer.override {
-          inherit php;
-        })
+        (pkgs.php82Packages.composer.override { inherit php; })
       ]
     else
       [ ]
   )
-  # Thinkpad-specific packages
   ++ (
     if isThinkpad then
       [
@@ -99,14 +98,13 @@ in
       [ ]
   );
 
-  home.file = {
-    # Add file management here if needed
-  };
+  home.file."${fontsDir}/NerdFonts".source = iosevkaTermNerdFont;
+
+  fonts.fontconfig.enable = isLinux;
 
   home.sessionVariables = {
     # EDITOR = "emacs";
   };
 
-  # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 }
