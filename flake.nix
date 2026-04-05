@@ -8,9 +8,20 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     textfox.url = "github:adriankarlen/textfox";
+    tree-sitter = {
+      url = "github:tree-sitter/tree-sitter";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { nixpkgs, home-manager, textfox, ... }:
+  outputs =
+    {
+      nixpkgs,
+      home-manager,
+      textfox,
+      tree-sitter,
+      ...
+    }:
     let
       # Define configurations for different machines
       configs = {
@@ -39,7 +50,8 @@
         };
       };
 
-      mkHomeConfig = name: config:
+      mkHomeConfig =
+        name: config:
         let
           pkgs = nixpkgs.legacyPackages.${config.system};
         in
@@ -48,6 +60,7 @@
           modules = config.modules;
           extraSpecialArgs = {
             inherit (config) system username;
+            tree-sitter-cli = tree-sitter.packages.${config.system}.cli;
           };
         };
     in

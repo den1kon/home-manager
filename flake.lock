@@ -79,7 +79,8 @@
       "inputs": {
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
-        "textfox": "textfox"
+        "textfox": "textfox",
+        "tree-sitter": "tree-sitter"
       }
     },
     "textfox": {
@@ -98,6 +99,26 @@
       "original": {
         "owner": "adriankarlen",
         "repo": "textfox",
+        "type": "github"
+      }
+    },
+    "tree-sitter": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1775388437,
+        "narHash": "sha256-Xyr9eEOj+NV50N978kmMVizI9fRXYzcyMFVoIAU4ZcI=",
+        "owner": "tree-sitter",
+        "repo": "tree-sitter",
+        "rev": "aa2c18895b1d348883fa09114b51a074afc53c75",
+        "type": "github"
+      },
+      "original": {
+        "owner": "tree-sitter",
+        "repo": "tree-sitter",
         "type": "github"
       }
     }

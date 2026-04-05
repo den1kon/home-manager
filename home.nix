@@ -3,6 +3,7 @@
   pkgs,
   username,
   system,
+  tree-sitter-cli,
   ...
 }:
 
@@ -39,6 +40,7 @@ in
 
   # Universal packages for both systems
   home.packages = [
+    tree-sitter-cli
     pkgs.neovim
     pkgs.tmux
     pkgs.oh-my-zsh
