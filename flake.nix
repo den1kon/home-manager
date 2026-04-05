@@ -9,6 +9,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     textfox.url = "github:adriankarlen/textfox";
+
+    # Firefox nightly
+    # TODO: remove when stable reaches version 149
+    # firefox.url = "github:nix-community/flake-firefox-nightly";
+    # firefox.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -16,6 +21,7 @@
       nixpkgs,
       home-manager,
       textfox,
+      # firefox, # TODO remove
       ...
     }:
     let
@@ -39,6 +45,9 @@
 
         # Optionally use extraSpecialArgs
         # to pass through arguments to home.nix
+        # extraSpecialArgs = {
+        #   inherit firefox;
+        # };
       };
     };
 }

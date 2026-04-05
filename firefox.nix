@@ -12,7 +12,7 @@
       tabs = {
         horizontal.enable = false;
         # vertical.enable = true;
-        vertical.sidebery.enable = false;
+        # vertical.sidebery.enable = false;
         # vertical.sidebery.margin = "1.0rem";
       };
     };
@@ -164,6 +164,12 @@
         # Firefox Color
         "FirefoxColor@mozilla.com" = {
           install_url = "https://addons.mozilla.org/firefox/downloads/file/3643624/latest.xpi";
+          installation_mode = "force_installed";
+          default_area = "navbar";
+        };
+        # Unhook for YouTube
+        "myallychou@gmail.com" = {
+          install_url = "https://addons.mozilla.org/firefox/downloads/file/4263531/latest.xpi";
           installation_mode = "force_installed";
           default_area = "navbar";
         };
