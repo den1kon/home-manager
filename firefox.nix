@@ -6,7 +6,9 @@
     # Replace with the names of profiles, defined in home-manager, or find existing ones in `about:profiles`
     profiles = [
       "denikon"
-      "test"
+      "work"
+      "edu"
+      "personal"
     ];
     config = {
       tabs = {
@@ -48,8 +50,10 @@
           "browser.aboutConfig.showWarning" = false; # tab and about:config warnings
           "browser.startup.homepage_override.mstone" = "ignore"; # disable welcome notices
           "browser.aboutwelcome.enabled" = false; # disable Intro screens
-          "browser.profiles.enabled" = true; # new profile switcher
           "browser.urlbar.scotchBonnet.enableOverride" = false; # disable search engine switcher in the URL bar [FF136+]
+
+          # New Profile Switcher is fundamentally broken atm
+          "browser.profiles.enabled" = false; # new profile switcher
         };
 
         containersForce = true;
@@ -72,11 +76,24 @@
         };
       };
 
-      test = {
+      personal = {
         id = 001;
         settings = {
         };
       };
+
+      work = {
+        id = 002;
+        settings = {
+        };
+      };
+
+      edu = {
+        id = 003;
+        settings = {
+        };
+      };
+
     };
 
     policies = {
@@ -92,6 +109,7 @@
       };
       OfferToSaveLogins = false; # Control whether or not Firefox offers to save passwords.
       # Disable or configure PDF.js, the built-in PDF viewer.
+      DisableBuiltinPDFViewer = true;
       PDFjs = {
         Enabled = true;
         EnablePermissions = false; # if set to true, the built-in PDF viewer will honor document permissions like preventing the copying of text.

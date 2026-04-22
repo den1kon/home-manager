@@ -1,5 +1,5 @@
 {
-  config,
+  # config,
   pkgs,
   username,
   system,
@@ -7,8 +7,10 @@
   ...
 }:
 
+with pkgs;
+
 let
-  php = pkgs.php82.buildEnv {
+  php = php82.buildEnv {
     extensions = (
       { enabled, all }:
       enabled
@@ -30,7 +32,7 @@ let
   isThinkpad = system == "x86_64-linux";
   isLinux = isThinkpad;
 
-  iosevkaTermNerdFont = pkgs.nerd-fonts.iosevka-term;
+  iosevkaTermNerdFont = nerd-fonts.iosevka-term;
 
   fontsDir = if isMacbook then "Library/Fonts" else ".local/share/fonts";
 in
@@ -42,49 +44,56 @@ in
   home.stateVersion = "25.11";
 
   home.packages = [
+    # telegram-desktop
+    vaultwarden-postgresql
     tree-sitter-cli
-    pkgs.neovim
-    pkgs.tmux
-    pkgs.oh-my-zsh
-    pkgs.imagemagick
-    pkgs.redis
-    pkgs.nodejs_24
-    pkgs.adminer
-    pkgs.lazygit
+    neovim
+    oh-my-zsh
+    imagemagick
+    redis
+    nodejs_24
+    adminer
+    lazygit
 
-    pkgs.markdown-oxide
-    pkgs.lua-language-server
-    pkgs.typescript-language-server
-    pkgs.stylua
-    pkgs.nil
-    pkgs.nixfmt
-    pkgs.prettierd
-    pkgs.jq
-    pkgs.php82Packages.php-cs-fixer
-    pkgs.phpactor
-    pkgs.tinymist
-    pkgs.typstyle
+    markdown-oxide
+    lua-language-server
+    typescript-language-server
+    stylua
+    nil
+    nixfmt
+    prettierd
+    jq
+    php82Packages.php-cs-fixer
+    phpactor
+    tinymist
+    typstyle
 
-    pkgs.rustc
-    pkgs.rustfmt
-    pkgs.cargo
+    rustc
+    rustfmt
+    cargo
 
-    pkgs.ripgrep
-    pkgs.fd
-    pkgs.bat
-    pkgs.eza
-    pkgs.zoxide
+    ripgrep
+    fd
+    bat
+    eza
+    zoxide
+
+    clang-tools
 
     iosevkaTermNerdFont
   ]
   ++ (
     if isMacbook then
       [
-        pkgs.jetbrains.phpstorm
-        pkgs.code-cursor
-        pkgs.orbstack
+        utm
+        vagrant
+
+        jetbrains.phpstorm
+        code-cursor
+        orbstack
         php
-        (pkgs.php82Packages.composer.override { inherit php; })
+        (php82Packages.composer.override { inherit php; })
+        anki-bin
       ]
     else
       [ ]
@@ -92,7 +101,7 @@ in
   ++ (
     if isThinkpad then
       [
-        pkgs.spotify-player
+        spotify-player
       ]
     else
       [ ]

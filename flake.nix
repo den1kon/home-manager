@@ -34,6 +34,7 @@
             ./git.nix
             ./firefox.nix
             ./alacritty.nix
+            ./tmux.nix
           ];
         };
         thinkpad = {
